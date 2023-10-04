@@ -21,4 +21,4 @@ while row:
     print (row) 
     row = cursor.fetchone()
 
-# app = FastAPI()
+app = FastAPI()
