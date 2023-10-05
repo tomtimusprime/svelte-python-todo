@@ -7,10 +7,10 @@ from pydantic import BaseModel, Field
 import pyodbc
 
 # print(pyodbc.drivers())
-# cnxn = pyodbc.connect('DRIVER={Devart ODBC Driver for SQL Server};Server=TOMSM16;Database=Todolistdb;User ID=TomsM16\\tombl;Trusted_Connection=yes;')
+# cnxn = pyodbc.cnxnect('DRIVER={Devart ODBC Driver for SQL Server};Server=TOMSM16;Database=Todolistdb;User ID=TomsM16\\tombl;Trusted_cnxnection=yes;')
 
-connectionString = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=TOMSM16;DATABASE=Todolistdb;Trusted_Connection=yes;'
-# DATABASE_URL = "mssql+pyodbc://DRIVER={ODBC Driver 17 for SQL Server};SERVER=TOMSM16;DATABASE=Todolistdb;Trusted_Connection=yes;"
+connectionString = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=TOMSM16;DATABASE=Todolistdb;Trusted_cnxnection=yes;'
+# DATABASE_URL = "mssql+pyodbc://DRIVER={ODBC Driver 17 for SQL Server};SERVER=TOMSM16;DATABASE=Todolistdb;Trusted_cnxnection=yes;"
 # database = Database(DATABASE_URL)
 # print(database)
 
@@ -64,9 +64,9 @@ class TodoTableModel:
         sql = f'INSERT INTO {self.table} ([title],[notes],[completed]) OUTPUT INSERTED.id VALUES (?,?,?);'
         
         try:
-            cursor = conn.cursor()
-            row = cursor.execute(sql, data.name, data.value, data.date, data.comment).fetchone()
-            conn.commit()
+            cursor = cnxn.cursor()
+            row = cursor.execute(sql, data.title, data.notes, data.completed).fetchone()
+            cnxn.commit()
             ret = {"message": "created", "id": row[0]}
         except pyodbc.Error as e:
             print(f'Insert Failed')
@@ -77,13 +77,13 @@ class TodoTableModel:
 
     
     def list(self, id = None):
-        sql = f'SELECT * FROM {self.view}'
+        sql = f'SELECT * FROM {self.table}'
         
         try:
-            cursor = conn.cursor()
+            cursor = cnxn.cursor()
             cursor.execute(sql)
             ret = mssql_result2dict(cursor)
-            conn.commit()
+            cnxn.commit()
         except pyodbc.Error as e:
             print(f'SQL Query Failed: {e}')
             ret = {"message": "system error"}
@@ -94,13 +94,13 @@ class TodoTableModel:
         if not id: 
             return {"message": "id not set"}
 
-        sql = f'SELECT * FROM {self.view} WHERE id=?'
+        sql = f'SELECT * FROM {self.table} WHERE id=?'
         
         try:
-            cursor = conn.cursor()
+            cursor = cnxn.cursor()
             cursor.execute(sql, id)
             ret = mssql_result2dict(cursor)
-            conn.commit()
+            cnxn.commit()
         except pyodbc.Error as e:
             print(f'SQL Query Failed: {e}')
             ret = {"message": "system error"}
@@ -115,10 +115,10 @@ class TodoTableModel:
         sql = f'UPDATE {self.table} set name=?, value=?, date=?, comment=? WHERE id=?'
         
         try:
-            cursor = conn.cursor()
+            cursor = cnxn.cursor()
             cursor.execute(sql, data.name, data.value, data.date, data.comment, id)
             ret = {"message": "updated"}
-            conn.commit()
+            cnxn.commit()
         except pyodbc.Error as e:
             print(f'SQL Query Failed: {e}')
             ret = {"message": "system error"}
@@ -132,10 +132,10 @@ class TodoTableModel:
         sql = f'DELETE FROM {self.table} WHERE id=?'
         
         try:
-            cursor = conn.cursor()
+            cursor = cnxn.cursor()
             cursor.execute(sql, id)
             ret = {"message": "deleted"}
-            conn.commit()
+            cnxn.commit()
         except pyodbc.Error as e:
             print(f'SQL Query Failed: {e}')
             ret = {"message": "system error"}
