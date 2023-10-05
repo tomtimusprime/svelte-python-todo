@@ -9,6 +9,17 @@ import pyodbc
 # cnxn = pyodbc.connect('DRIVER={Devart ODBC Driver for SQL Server};Server=TOMSM16;Database=Todolistdb;User ID=TomsM16\\tombl;Trusted_Connection=yes;')
 
 connectionString = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=TOMSM16;DATABASE=Todolistdb;Trusted_Connection=yes;'
+# DATABASE_URL = "mssql+pyodbc://DRIVER={ODBC Driver 17 for SQL Server};SERVER=TOMSM16;DATABASE=Todolistdb;Trusted_Connection=yes;"
+# database = Database(DATABASE_URL)
+# print(database)
+
+# Base = declarative_base()
+
+# class TodoItem(Base):
+#     __tablename__ = "TodoItems"
+#     id = Column(Integer, primary_key=True, index=True)
+#     title = Column(String, index=True)
+#     completed = Column(Boolean, default=False)
 
 cnxn = pyodbc.connect(connectionString)
 # cursor = cnxn.cursor()
