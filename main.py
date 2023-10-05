@@ -20,8 +20,12 @@ connectionString = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=TOMSM16;DATABA
 #     id = Column(Integer, primary_key=True, index=True)
 #     title = Column(String, index=True)
 #     completed = Column(Boolean, default=False)
+try:
+    cnxn = pyodbc.connect(connectionString)
+except pyodbc.Error as e:
+    print(e)
+    exit()
 
-cnxn = pyodbc.connect(connectionString)
 # cursor = cnxn.cursor()
 # cursor.execute("INSERT INTO TodoItems (title, notes, completed) VALUES ('Test', 'Test Entry', 1)") 
 
