@@ -1,7 +1,7 @@
 import pyodbc
 
-connectionString = 'DRIVER={SQL Server};SERVER=TOMSM16;DATABASE=Todolistdb;Trusted_cnxnection=yes;'
-print(pyodbc.drivers())
+connectionString = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=TOMSM16;DATABASE=Todolistdb;Trusted_connection=yes;'
+# print(pyodbc.drivers())
 try:
     cnxn = pyodbc.connect(connectionString)
 except pyodbc.Error as e:

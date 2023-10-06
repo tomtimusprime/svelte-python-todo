@@ -1,28 +1,15 @@
 from fastapi import FastAPI
-from sqlalchemy import create_engine, Column, Integer, String, Boolean
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-from databases import Database
 from pydantic import BaseModel, Field
 import pyodbc
 
 # print(pyodbc.drivers())
-# cnxn = pyodbc.cnxnect('DRIVER={Devart ODBC Driver for SQL Server};Server=TOMSM16;Database=Todolistdb;User ID=TomsM16\\tombl;Trusted_cnxnection=yes;')
+# cnxn = pyodbc.connect('DRIVER={Devart ODBC Driver for SQL Server};Server=TOMSM16;Database=Todolistdb;User ID=TomsM16\\tombl;Trusted_connection=yes;')
 
-connectionString = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=TOMSM16;DATABASE=Todolistdb;Trusted_cnxnection=yes;'
-# DATABASE_URL = "mssql+pyodbc://DRIVER={ODBC Driver 17 for SQL Server};SERVER=TOMSM16;DATABASE=Todolistdb;Trusted_cnxnection=yes;"
-# database = Database(DATABASE_URL)
-# print(database)
+connectionString = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=TOMSM16;DATABASE=Todolistdb;Trusted_connection=yes;'
 
-# Base = declarative_base()
-
-# class TodoItem(Base):
-#     __tablename__ = "TodoItems"
-#     id = Column(Integer, primary_key=True, index=True)
-#     title = Column(String, index=True)
-#     completed = Column(Boolean, default=False)
 try:
     cnxn = pyodbc.connect(connectionString)
+    print("Connected to the database.")
 except pyodbc.Error as e:
     print(e)
     exit()
@@ -33,11 +20,18 @@ except pyodbc.Error as e:
 def mssql_result2dict(cursor):
     try: 
         result = []
-        columns = [column[0] for column in cursor.description]
-        for row in  cursor.fetchall():
-            result.append(dict(zip(columns,row)))
+        # columns = [column[0] for column in cursor.description]
+        # for row in  cursor.fetchall():
+        #     result.append(dict(zip(columns,row)))
+        
+        fetched_rows = cursor.fetchall()
 
-        # print(result)
+        # Check if fetched_rows is not None before attempting to iterate
+        if fetched_rows is not None:
+            for row in fetched_rows:
+                result.append(dict(zip(columns, row)))
+        
+        print(result)
 
         #Check for results
         if len(result) > 0:
@@ -145,12 +139,15 @@ class TodoTableModel:
 # cursor = cnxn.cursor()
 # cursor.execute("INSERT INTO TodoItems (title, notes, completed) VALUES ('Test', 'Test Entry', 1)") 
 
-cursor = cnxn.cursor()	
-print(cursor.execute("SELECT * FROM TodoItems"))
-row = cursor.fetchall()
-while row:
-    print (row) 
-    row = cursor.fetchone()
+# print(mssql_result2dict(cnxn.cursor()))
 
-app = FastAPI()
+cursor = cnxn.cursor()	
+print(mssql_result2dict(cursor))
+# print(cursor.execute("SELECT * FROM TodoItems"))
+# row = cursor.fetchall()
+# while row:
+#     print (row) 
+#     row = cursor.fetchone()
+
+# app = FastAPI()
 # Testing
