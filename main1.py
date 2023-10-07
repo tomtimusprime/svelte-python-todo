@@ -75,7 +75,8 @@ def getTodo(todo_id: int):
         
     except Exception as e:
         return {"Error":str(e)}
-    
+
+# End point to handle deletion of a record.
 @app.delete("/todos/{todo_id}/")
 def delete_todo(todo_id: int):
     try:
