@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 import pyodbc
 from config import CONNECTION_STRING
@@ -57,7 +57,7 @@ def getAllToDos():
     except Exception as e:
         return {"Error": str(e)}
     
-@app.get("/todo/{todo_id}/")
+@app.get("/todos/{todo_id}/")
 def getTodo(todo_id: int):
     try:
         connection = get_db_connection(CONNECTION_STRING)
@@ -75,6 +75,30 @@ def getTodo(todo_id: int):
         
     except Exception as e:
         return {"Error":str(e)}
+    
+@app.delete("/todos/{todo_id}/")
+def delete_todo(todo_id: int):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Check if the todo item exists
+        cursor.execute("SELECT COUNT(*) FROM TodoItems WHERE id = ?", todo_id)
+        count = cursor.fetchone()[0]
+
+        if count == 0:
+            conn.close()
+            raise HTTPException(status_code=404, detail="Todo item not found")
+
+        # Delete the todo item from the database
+        cursor.execute("DELETE FROM TodoItems WHERE id = ?", todo_id)
+        conn.commit()
+        conn.close()
+
+        return {"message": "Todo item deleted successfully"}
+
+    except Exception as e:
+        return {"error": str(e)}
 
 # connection = get_db_connection(CONNECTION_STRING)
 # cursor = connection.cursor()
