@@ -101,6 +101,8 @@ def delete_todo(todo_id: int):
     except Exception as e:
         return {"error": str(e)}
 
+# Adding an end point to update a record
+
 # connection = get_db_connection(CONNECTION_STRING)
 # cursor = connection.cursor()
 # cursor.execute("INSERT INTO TodoItems (title, notes, completed) VALUES ('Test', 'Another Entry from main1.py program', 1)")
