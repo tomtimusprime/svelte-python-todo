@@ -102,6 +102,7 @@ def delete_todo(todo_id: int):
         return {"error": str(e)}
 
 # Adding an end point to update a record
+#adding an end point to update a record for the api
 
 # connection = get_db_connection(CONNECTION_STRING)
 # cursor = connection.cursor()
