@@ -102,12 +102,35 @@ def delete_todo(todo_id: int):
         return {"error": str(e)}
 
 # Adding an end point to update a record
+@app.put("/todos/{todo_id}/")
+def update_todo(todo_id: int, todo_data: UpdateTodoItem):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Check if the todo item exists
+        cursor.execute("SELECT COUNT(*) FROM TodoItems WHERE id = ?", todo_id)
+        count = cursor.fetchone()[0]
+
+        if count == 0:
+            conn.close()
+            raise HTTPException(status_code=404, detail="Todo item not found")
+
+        # Update the todo item in the database
+        cursor.execute("UPDATE TodoItems SET title = ?, completed = ? WHERE id = ?", todo_data.title, todo_data.completed, todo_id)
+        conn.commit()
+        conn.close()
+
+        return {"message": "Todo item updated successfully"}
+
+    except Exception as e:
+        return {"error": str(e)}
 #adding an end point to update a record for the api
 # adding an end point to update a record.
 # adding an end point to update a record.
 # adding an end point to update a record.
 # adding an end point to update a record.
-
+# adding an end point to update a record.
 
 
 # connection = get_db_connection(CONNECTION_STRING)
