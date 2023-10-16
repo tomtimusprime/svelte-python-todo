@@ -100,6 +100,23 @@ def delete_todo(todo_id: int):
 
     except Exception as e:
         return {"error": str(e)}
+    
+# Adding an end point to create a new record
+@app.post("/todos/")
+def create_todo(todo_data: CreateTodoItem):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Insert the new todo item into the database
+        cursor.execute("INSERT INTO TodoItems (title, completed) VALUES (?, ?)", todo_data.title, todo_data.completed)
+        conn.commit()
+        conn.close()
+
+        return {"message": "Todo item created successfully"}
+
+    except Exception as e:
+        return {"error": str(e)}
 
 # Adding an end point to update a record
 @app.put("/todos/{todo_id}/")
