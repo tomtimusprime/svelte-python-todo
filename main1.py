@@ -81,6 +81,7 @@ def getTodo(todo_id: int):
 # End point to handle the deletion of a record.
 # worked on rust today.
 # worked on more rust today.
+# worked on rust.
 # worked on more rust today.
 @app.delete("/todos/{todo_id}/")
 def delete_todo(todo_id: int):
