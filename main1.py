@@ -38,7 +38,8 @@ def createToDo(todo: TodoItem):
         return {"message": "Todo item created successfully"}     
     except Exception as e:
         return {"Error": str(e)}
-    
+
+# Endpoint to get all todos 
 @app.get("/get-todos/")
 def getAllToDos():
     try:
@@ -56,7 +57,8 @@ def getAllToDos():
         return todos
     except Exception as e:
         return {"Error": str(e)}
-    
+
+# Endpoint to get an individual todo based on an id    
 @app.get("/todos/{todo_id}/")
 def getTodo(todo_id: int):
     try:
@@ -77,14 +79,6 @@ def getTodo(todo_id: int):
         return {"Error":str(e)}
 
 # End point to handle deletion of a record.
-# End point to handle the deletion of a record.
-# End point to handle the deletion of a record.
-# worked on rust today.
-# worked on more rust today.
-# worked on rust.
-# worke on rust today.
-# worked on more rust today.
-# worked on rust today.
 @app.delete("/todos/{todo_id}/")
 def delete_todo(todo_id: int):
     try:
@@ -109,27 +103,10 @@ def delete_todo(todo_id: int):
 
     except Exception as e:
         return {"error": str(e)}
-    
-# Adding an end point to create a new record
-@app.post("/todos/")
-def create_todo(todo_data: CreateTodoItem):
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-
-        # Insert the new todo item into the database
-        cursor.execute("INSERT INTO TodoItems (title, completed) VALUES (?, ?)", todo_data.title, todo_data.completed)
-        conn.commit()
-        conn.close()
-
-        return {"message": "Todo item created successfully"}
-
-    except Exception as e:
-        return {"error": str(e)}
 
 # Adding an end point to update a record
 @app.put("/todos/{todo_id}/")
-def update_todo(todo_id: int, todo_data: UpdateTodoItem):
+def update_todo(todo_id: int, todo: TodoItem):
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -143,7 +120,7 @@ def update_todo(todo_id: int, todo_data: UpdateTodoItem):
             raise HTTPException(status_code=404, detail="Todo item not found")
 
         # Update the todo item in the database
-        cursor.execute("UPDATE TodoItems SET title = ?, completed = ? WHERE id = ?", todo_data.title, todo_data.completed, todo_id)
+        cursor.execute("UPDATE TodoItems SET title = ?, completed = ? WHERE id = ?", todo.title, todo.completed, todo_id)
         conn.commit()
         conn.close()
 
@@ -151,13 +128,6 @@ def update_todo(todo_id: int, todo_data: UpdateTodoItem):
 
     except Exception as e:
         return {"error": str(e)}
-#adding an end point to update a record for the api
-# adding an end point to update a record.
-# adding an end point to update a record.
-# adding an end point to update a record.
-# adding an end point to update a record.
-# adding an end point to update a record.
-
 
 # connection = get_db_connection(CONNECTION_STRING)
 # cursor = connection.cursor()
