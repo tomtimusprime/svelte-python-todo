@@ -84,6 +84,7 @@ def getTodo(todo_id: int):
 # worked on rust.
 # worke on rust today.
 # worked on more rust today.
+# worked on rust today.
 @app.delete("/todos/{todo_id}/")
 def delete_todo(todo_id: int):
     try:
@@ -97,6 +98,7 @@ def delete_todo(todo_id: int):
         if count == 0:
             conn.close()
             raise HTTPException(status_code=404, detail="Todo item not found")
+        
 
         # Delete the todo item from the database
         cursor.execute("DELETE FROM TodoItems WHERE id = ?", todo_id)
