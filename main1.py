@@ -143,3 +143,4 @@ if __name__ == '__main__':
 # except pyodbc.Error as e:
 #     print(e)
 #     exit()
+# I created a madlibs game in rust.
