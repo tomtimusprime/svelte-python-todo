@@ -144,3 +144,4 @@ if __name__ == '__main__':
 #     print(e)
 #     exit()
 # I created a madlibs game in rust.
+# Worked on a random number generator in rust
