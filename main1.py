@@ -147,3 +147,4 @@ if __name__ == '__main__':
 # Worked on a random number generator in rust
 # worked on rust.
 # worked on rust.
+# finished a number guessing game in rust.
