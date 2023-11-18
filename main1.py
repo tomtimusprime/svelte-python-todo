@@ -164,3 +164,4 @@ if __name__ == '__main__':
 # studied rust and python today
 # studied rust
 # studied svelte today.
+# worked on portfolio website.
