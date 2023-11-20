@@ -166,3 +166,4 @@ if __name__ == '__main__':
 # studied svelte today.
 # worked on portfolio website.
 # worked with svelte.
+# worked on javascript.
