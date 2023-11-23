@@ -169,3 +169,4 @@ if __name__ == '__main__':
 # worked on javascript.
 # been working on javascript.
 # worked on a javascript project generating data jokes.
+# worked on javascript and svelte.
