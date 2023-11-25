@@ -171,3 +171,4 @@ if __name__ == '__main__':
 # worked on a javascript project generating data jokes.
 # worked on javascript and svelte.
 # worked on svelte.
+# worked on my svelte todo app
