@@ -174,3 +174,4 @@ if __name__ == '__main__':
 # worked on my svelte todo app
 # worked on rust and javascript
 # worked on rust and angular.
+# worked on aws, javascript and svelte.
