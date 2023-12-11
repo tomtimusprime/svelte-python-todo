@@ -185,3 +185,4 @@ if __name__ == '__main__':
 # worked on rust - made a number guessing game.
 # worked on rust today
 # studied algorithms today.
+# studied Rust today.
